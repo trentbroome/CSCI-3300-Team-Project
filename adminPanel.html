@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="ISO-8859-1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script></head>
+<header>
+
+</header>
+<body style="height:1500px">
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">RIS System</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><a href="#">Admin</a></li>
+      <li><a href="#">Log Out</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="#"><span class="glyphicon glyphicon-user"></span> You are logged in as: </a></li>
+    </ul>
+    </ul>
+  </div>
+</nav>
+  
+<div class="container" style="margin-top:50px">
+<h2>This is the admin panel</h2>
+<table border="1" cellpadding="10">
+		<thead>
+			<tr>
+				<th>Team Name</th>
+				<th>Name of Worker</th>
+				
+				<th sec:authorize="hasAnyAuthority('ADMIN')">Actions</th>				
+				
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="product : ${listProducts}">
+				<td th:text="${Users.id}">Team Name/td>
+				<td th:text="${Users.name}">Name of worker</td>
+				
+				<td sec:authorize="hasAnyAuthority('ADMIN')">
+					<a th:href="@{'/edit/' + ${Users.id}}">Edit</a>			
+					&nbsp;&nbsp;&nbsp;&nbsp;
+					<a sec:authorize="hasAuthority('ADMIN')" th:href="@{'/delete/' + ${Users.id}}">Delete</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+</html>
