@@ -1,0 +1,12 @@
+<html xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<h1>Welcome to Spring Boot Security</h1>
+
+<h2>Login Page</h2>
+
+<form method="POST" action="#" th:action="@{/login_user}">
+	User Name : <input type="text" th:field="${user.username}"><br><br>
+	Password  : <input type="password" th:field="${user.password}"><br><br>
+	<input type="submit" name="submit"/>
+</form>
+</html>
