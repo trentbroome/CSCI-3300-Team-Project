@@ -24,7 +24,7 @@
     </div>
     <ul class="nav navbar-nav">
       <li><a href="#">Patient info</a></li>
-      <li><a href="#">Log Out</a></li>
+      <li><a th:href ="@{/user_logout}">Log Out</a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
       <li><a href="#"><span class="glyphicon glyphicon-user"></span> You are logged in as: </a></li>
@@ -49,37 +49,37 @@
          <div align="center">	
 		<h1>Create New Patient</h1>
 		<br/>
-		<form action="#" th:action="@{/save}" th:object="${product}" method="post">
+		<form action="#" method="post">
 			<table border="0" cellpadding="10">
 				<tr>
 					<td>First Name:</td>
-					<td><input type="text" th:field="*{firstName}" /></td>
+					<td><input type="text"  /></td>
 				</tr>
                 <tr>
 					<td>Middle Name:</td>
-					<td><input type="text" th:field="*{middleName}" /></td>
+					<td><input type="text"  /></td>
 				</tr>	
 				<tr>
 					<td>Last Name:</td>
-					<td><input type="text" th:field="*{lastName}" /></td>
+					<td><input type="text"  /></td>
 				</tr>				
 				<tr>
 					<td>Email info:</td>
-					<td><input type="text" th:field="*{email}" /></td>
+					<td><input type="text"  /></td>
 				</tr>				
 				<tr>
 					<td>Birth Date:</td>
-					<td><input type="text" th:field="*{DOB}" /></td>
+					<td><input type="text"  /></td>
 				</tr>		
                 <tr>
 					<td>Phone Number:</td>
-					<td><input type="text" th:field="*{phoneNumber}" /></td>
+					<td><input type="text"  /></td>
 				</tr>	
                 <tr>
-  <td>Asthma Allergy: <label th:for="${#ids.next('Asthma Allergy')}" th:text="#{seedstarter.asthmaAllergy}">Yes</label>
+  <!--<td>Asthma Allergy: <label th:for="${#ids.next('Asthma Allergy')}" th:text="#{seedstarter.asthmaAllergy}">Yes</label>
     <input type="checkbox" th:field="*{asthmaAllergy}" /></td>
     <td><label th:for="${#ids.next('Asthma Allergy')}" th:text="#{seedstarter.asthmaAllergy}">No</label>
-  <input type="checkbox" th:field="*{asthmaAllergy}" /></td>
+  <input type="checkbox" th:field="${asthmaAllergy}" /></td>
 				</tr>
                                 <tr>
   <td>Xraydye Allergy: <label th:for="${#ids.next('Xraydye Allergy')}" th:text="#{seedstarter.xraydyeAllergy}">Yes</label>
@@ -100,14 +100,14 @@
     <input type="checkbox" th:field="*{latexAllergy}" /></td>
     <td><label th:for="${#ids.next('Latex Allergy')}" th:text="#{seedstarter.latexAllergy}">No</label>
   <input type="checkbox" th:field="*{latexAllergy:}" /></td>
-				</tr>	
+				</tr>	-->
                                                 <tr>
 					<td>Other Allergies:</td>
-					<td><input type="text" th:field="*{otherAllergies}" /></td>
+					<td><input type="text" /></td>
 				</tr>		
                 <tr>
 					<td>Notes:</td>
-					<td><input type="text" th:field="*{notes}" /></td>
+					<td><input type="text" /></td>
 				</tr>	
 				<tr>
 					<td colspan="2"><button type="submit">Save</button></td>
@@ -128,7 +128,7 @@
 
 	
  <div id="physician_section">
-            <form action="{% url 'patient_lookup' %}" method="POST">
+            <form action= 'patient_lookup' method="POST">
                 <!-- {% csrf_token %}-->
                 <div class="modal fade" id="new_order" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
@@ -146,7 +146,7 @@
             <div class="col-md-4 mt-5">
                 <label for="birthdate">Patients DOB: </label>
                 <div class="input-group date">
-                    <input type="text" class="form-control" id="birthdate" autocomplete="off" th:field="*{birtdate}"/>
+                    <input type="text" class="form-control" id="birthdate" autocomplete="off"/>
                     <div class="input-group-append">
                         <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                     </div>
