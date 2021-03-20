@@ -32,7 +32,8 @@
   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Create patient</button>
   <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
-    
+
+    <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -42,7 +43,7 @@
          <div align="center">	
 		<h1>Create New Patient</h1>
 		<br/>
-		<form th:action="@{/savePatientInfo}" th:object="${patientInfo}"method="post">
+		<form th:action="@{/savePatientInfo}" th:object="${patient}"method="post">
 <table class="table">
 				<tr>
 					<td><label>First Name:</label></td>
@@ -50,7 +51,7 @@
 				</tr>
                 <tr>
 					<td><label>Middle Name:</label></td>
-					<td><input type="text" class = "form-control" th:field = "*{middleName}" /></td>
+					<td><input type="text" class = "form-control" th:field = "*{middleInitial}" /></td>
 				</tr>	
 				<tr>
 					<td><label>Last Name:</label></td>
@@ -69,34 +70,34 @@
 					<td><input type="text" class = "form-control" th:field = "*{phoneNumber}" /></td>
 				</tr>	
                 <tr>
-  <!--<td>Asthma Allergy: <label th:for="${#ids.next('Asthma Allergy')}" th:text="#{seedstarter.asthmaAllergy}">Yes</label>
-    <input type="checkbox" th:field="*{asthmaAllergy}" /></td>
-    <td><label th:for="${#ids.next('Asthma Allergy')}" th:text="#{seedstarter.asthmaAllergy}">No</label>
-  <input type="checkbox" th:field="${asthmaAllergy}" /></td>
+  <td>Asthma Allergy:           <td><input class="form-check-input" type="radio" th:field="*{asthmaAllergy}" id="option3" value="yes">
+        <label class="form-check-label" for="option3">Yes</label>
+                  <input class="form-check-input" type="radio" th:field="*{asthmaAllergy}" id="option3" value="no">
+        <label class="form-check-label" for="option3">no</label></td>
 				</tr>
                                 <tr>
-  <td>Xraydye Allergy: <label th:for="${#ids.next('Xraydye Allergy')}" th:text="#{seedstarter.xraydyeAllergy}">Yes</label>
-    <input type="checkbox" th:field="*{xraydyeAllergy}" /></td>
-    <td><label th:for="${#ids.next('Xraydye Allergy')}" th:text="#{seedstarter.xraydyeAllergy}">No</label>
-  <input type="checkbox" th:field="*{xraydyeAllergy}" /></td>
+  <td>Xraydye Allergy:           <td><input class="form-check-input" type="radio" th:field="*{xraydyeAllergy}" id="option3" value="yes">
+        <label class="form-check-label" for="option3">Yes</label>
+                  <input class="form-check-input" type="radio" th:field="*{xraydyeAllergy}" id="option3" value="no">
+        <label class="form-check-label" for="option3">no</label></td>
 				</tr>	
                                 <tr>
   <td> Mridye Allergy:
- <label th:for="${#ids.next('Mridye Allergy')}" th:text="#{seedstarter.mridyeAllergy}">Yes</label>
-    <input type="checkbox" th:field="*{mridyeAllergy}" /></td>
-    <td><label th:for="${#ids.next('Mridye Allergy')}" th:text="#{seedstarter.mridyeAllergy}">No</label>
-  <input type="checkbox" th:field="*{mridyeAllergy}" /></td>
+          <td><input class="form-check-input" type="radio" th:field="*{mridyeAllergy}" id="option3" value="yes">
+        <label class="form-check-label" for="option3">Yes</label>
+                  <input class="form-check-input" type="radio" th:field="*{mridyeAllergy}" id="option3" value="no">
+        <label class="form-check-label" for="option3">no</label></td>
 				</tr>	
                                 <tr>
   <td>Latex Allergy:
- <label th:for="${#ids.next('Latex Allergy')}" th:text="#{seedstarter.latexAllergy}">Yes</label>
-    <input type="checkbox" th:field="*{latexAllergy}" /></td>
-    <td><label th:for="${#ids.next('Latex Allergy')}" th:text="#{seedstarter.latexAllergy}">No</label>
-  <input type="checkbox" th:field="*{latexAllergy:}" /></td>
-				</tr>	-->
+          <td><input class="form-check-input" type="radio" th:field="*{latexAllergy}" id="option3" value="yes">
+        <label class="form-check-label" for="option3">Yes</label>
+                  <input class="form-check-input" type="radio" th:field="*{latexAllergy}" id="option3" value="no">
+        <label class="form-check-label" for="option3">no</label></td>
+				</tr>	
                                                 <tr>
 					<td><label>Other Allergies:</label></td>
-					<td><input type="text" class = "form-control" th:field = "*{otherAllergies}"/></td>
+					<td><input type="text" class = "form-control" th:field = "*{otherAllergy}"/></td>
 				</tr>		
                 <tr>
 					<td><label>Notes:</label></td>
@@ -121,7 +122,7 @@
  <div class="row mt-3">
                     <div class="col-12 col-md-6 text-center">
                         <div class="mb-3 h5">Active Orders</div>
-                        <table class="table table-sm">
+  <table class="table table-condensed">
                             <thead>
                             <tr>
                                 <th>First Name:</th>
@@ -133,29 +134,41 @@
 
                             </thead>
                             <tbody>
-                          <!--   {% for order in active_orders %}
-                                <tr>
-                                    <td><a class="orderlink" href="{% url 'order' order_id=order.id %}">{{ order.id }}</a></td>
-                                    <td><a class="orderlink" href="{% url 'order' order_id=order.id %}">{{ order.patient.full_name }}</a></td>
-                                    <td>{{ order.level.name }}</td>
-                                </tr>
-                            {% empty %}-->
+
+
+                                            <div class = "my-3">
                                 <tr>
                                     <td colspan="3" class="text-center text-muted">
                                         No orders
-                                        <tr th:each="user : ${user_list}">
-            <td th:text="${patientinfo.getFirstName()}">-1</td>
-            <td th:text="${patientinfo.getLastName()}">John Doe</td>
-            <td th:text="${patientinfo.getDOB()}">demo@example.com</td>
-            <td th:text="${patientinfo.getPhoneNumber()}">demo@example.com</td>
-            <td th:text="${patientinfo.getEmail()}">demo@example.com</td>
+                                        <tr th:each="patient : ${patient_list}">
+            <td th:text="${patient.getFirstName()}"></td>
+            <td th:text="${patient.getLastName()}"></td>
+            <td th:text="${patient.getDOB()}"></td>
+            <td th:text="${patient.getPhoneNumber()}"></td>
+            <td th:text="${patient.getEmail()}"></td>
 
-                                    </tr>
-                                    </td>
-                                </tr>
                            <!--  {% endfor %}-->
+                            
+                            </div>
                             </tbody>
-                        </table>
+                            </table>
+                        <a th:href="@{/createPatient}">Add new patient</a>
+
                     </div>
+                    <div>
+                      <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#searchModal">Search again</button>
+<div class="container" style="margin-top:50px">
+  <div class="modal fade" id="searchModal" role="dialog">
+  <script>
+  $( function() {
+    $( "#datepicker" ).datepicker();
+  } );
+  </script>
+</head>
+ 
+<p>Date: <input type="text" id="datepicker"></p>
+</body>
+  </div>
+  </div>
 </body>
 </html>
