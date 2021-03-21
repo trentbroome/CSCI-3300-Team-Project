@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -56,7 +55,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest arg0, HttpServletResponse arg1, Authentication arg2)
 			throws IOException, ServletException {
-		// TODO Auto-generated method stub
 		
 	}
 	
@@ -65,17 +63,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	public void configure(HttpSecurity http) throws Exception {
 		http
 		.authorizeRequests()
-		//.antMatchers("/css/", "/images/").permitAll()
-		//.antMatchers("/admin/").hasAnyAuthority("ADMIN")
-		//.antMatchers("/referral/").hasAnyAuthority("ADMIN", "REFERRAL_DOCTOR")
-		//.antMatchers("/home").hasAnyAuthority("ADMIN", "USER", "REFERRAL_DOCTOR",  "RECEPTIONIST", "TECHNICIAN", "RADIOLOGIST")
+		.antMatchers("/css/", "/images/").permitAll()
+		.antMatchers("/home/").hasAnyAuthority("ADMIN")
+		.antMatchers("/refDrPanel/").hasAnyAuthority( "REFDR")
+		.antMatchers("/techPanel").hasAnyAuthority("TECH")
+		.antMatchers("/radiologistsPanel").hasAnyAuthority( "RADIOLOGISTS")
+		.antMatchers("/receptionistsPanel").hasAnyAuthority( "RECEPTIONISTS")
+
 		.anyRequest().authenticated()
 
 		.and().formLogin().loginPage("/login").loginProcessingUrl("/login_user")
 		.successHandler(new RefererRedirectionAuthenticationSuccessHandler ())
 		.failureUrl("/login?error=loginError").defaultSuccessUrl("/home").permitAll()
 
-		//.and().logout().logoutUrl("/user_logout").logoutSuccessUrl("/login").deleteCookies("JSESSIONID")
+		.and().logout().logoutUrl("/user_logout").logoutSuccessUrl("/login").deleteCookies("JSESSIONID")
+
 		//.and().exceptionHandling().accessDeniedPage("/403")
 		.and().csrf().disable();
 	}

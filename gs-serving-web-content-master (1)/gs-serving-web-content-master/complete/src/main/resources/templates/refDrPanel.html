@@ -3,13 +3,30 @@
 	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <meta charset="ISO-8859-1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-      <link th:rel="stylesheet" th:href="@{assets/bootstrap-datepicker/css/bootstrap-datepicker.css}"/>
-    <link th:rel="stylesheet" th:href="@{assets/bootstrap-datepicker/css/bootstrap-datepicker.standalone.css}"/>
-    <link th:rel="stylesheet" th:href="@{webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
-    <link th:rel="stylesheet" th:href="@{webjars/font-awesome/5.11.2/css/all.css} "/>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <style>
+    html, body{
+      background-color: gray;
+      color: blue;
+    }
+    nav{
+        color: blue;
+    }
+    #orders{
+        color: blue;
+    }
+  </style>
+  <script>
+  $( function() {
+    $( "#datepicker" ).datepicker();
+  } );
+  </script>
   </head>
 
 <header>
@@ -23,7 +40,7 @@
       <a class="navbar-brand" href="#">RIS System</a>
     </div>
     <ul class="nav navbar-nav">
-      <li><a href="#">Patient info</a></li>
+      <li><a th:href="@{/createPatientOrder}">Patient info</a></li>
       <li><a th:href ="@{/user_logout}">Log Out</a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
@@ -34,101 +51,8 @@
   
 <div class="container" style="margin-top:50px">
 <h2>This is the Referrel Doctor panel</h2>
-<div class="container">
-  <h2>Patient</h2>
-  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Create patient</button>
-  <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-    
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Create Patient Info</h4>
-        </div>
-        <div class="modal-body">
-         <div align="center">	
-		<h1>Create New Patient</h1>
-		<br/>
-		<form action="#" method="post">
-			<table border="0" cellpadding="10">
-				<tr>
-					<td>First Name:</td>
-					<td><input type="text"  /></td>
-				</tr>
-                <tr>
-					<td>Middle Name:</td>
-					<td><input type="text"  /></td>
-				</tr>	
-				<tr>
-					<td>Last Name:</td>
-					<td><input type="text"  /></td>
-				</tr>				
-				<tr>
-					<td>Email info:</td>
-					<td><input type="text"  /></td>
-				</tr>				
-				<tr>
-					<td>Birth Date:</td>
-					<td><input type="text"  /></td>
-				</tr>		
-                <tr>
-					<td>Phone Number:</td>
-					<td><input type="text"  /></td>
-				</tr>	
-                <tr>
-  <!--<td>Asthma Allergy: <label th:for="${#ids.next('Asthma Allergy')}" th:text="#{seedstarter.asthmaAllergy}">Yes</label>
-    <input type="checkbox" th:field="*{asthmaAllergy}" /></td>
-    <td><label th:for="${#ids.next('Asthma Allergy')}" th:text="#{seedstarter.asthmaAllergy}">No</label>
-  <input type="checkbox" th:field="${asthmaAllergy}" /></td>
-				</tr>
-                                <tr>
-  <td>Xraydye Allergy: <label th:for="${#ids.next('Xraydye Allergy')}" th:text="#{seedstarter.xraydyeAllergy}">Yes</label>
-    <input type="checkbox" th:field="*{xraydyeAllergy}" /></td>
-    <td><label th:for="${#ids.next('Xraydye Allergy')}" th:text="#{seedstarter.xraydyeAllergy}">No</label>
-  <input type="checkbox" th:field="*{xraydyeAllergy}" /></td>
-				</tr>	
-                                <tr>
-  <td> Mridye Allergy:
- <label th:for="${#ids.next('Mridye Allergy')}" th:text="#{seedstarter.mridyeAllergy}">Yes</label>
-    <input type="checkbox" th:field="*{mridyeAllergy}" /></td>
-    <td><label th:for="${#ids.next('Mridye Allergy')}" th:text="#{seedstarter.mridyeAllergy}">No</label>
-  <input type="checkbox" th:field="*{mridyeAllergy}" /></td>
-				</tr>	
-                                <tr>
-  <td>Latex Allergy:
- <label th:for="${#ids.next('Latex Allergy')}" th:text="#{seedstarter.latexAllergy}">Yes</label>
-    <input type="checkbox" th:field="*{latexAllergy}" /></td>
-    <td><label th:for="${#ids.next('Latex Allergy')}" th:text="#{seedstarter.latexAllergy}">No</label>
-  <input type="checkbox" th:field="*{latexAllergy:}" /></td>
-				</tr>	-->
-                                                <tr>
-					<td>Other Allergies:</td>
-					<td><input type="text" /></td>
-				</tr>		
-                <tr>
-					<td>Notes:</td>
-					<td><input type="text" /></td>
-				</tr>	
-				<tr>
-					<td colspan="2"><button type="submit">Save</button></td>
-				</tr>
-			</table>
-		</form>
-	</div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-      
-    </div>
-  </div>
-  
-</div>
-
-	
  <div id="physician_section">
-            <form action= 'patient_lookup' method="POST">
+            <form th:action= '@{/searchPatients}' method="POST">
                 <!-- {% csrf_token %}-->
                 <div class="modal fade" id="new_order" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
@@ -140,44 +64,15 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-<div class="container">
-    <form method="post" th:object="${user}">
-        <div class="form-group row">
-            <div class="col-md-4 mt-5">
-                <label for="birthdate">Patients DOB: </label>
-                <div class="input-group date">
-                    <input type="text" class="form-control" id="birthdate" autocomplete="off"/>
-                    <div class="input-group-append">
-                        <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <button class="btn btn-primary" type="submit">Submit form</button>
-    </form>
-
-</div>
-<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
-<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-<script th:src="@{assets/bootstrap-datepicker/js/bootstrap-datepicker.js}"></script>
-<script>
-    $('.input-group.date').datepicker({
-        autoclose: true,
-        todayHighlight: true
-    });
-</script>
                                 </div>
                                 </div>
-                                <label for="id_birth_date" class="font-weight-bold">
-                                    Date of Birth:
+<p>Date: <input type="text" id="datepicker"></p>
                                 </label>
-                               <!-- {{ patient_lookup.birth_date }}-->
                             </div>
                             <div class="modal-footer">
+                            <form  method = "POST"
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Search Patients</button>
+                                <button type="submit" class="btn btn-primary"th:action = "@{/searchPatient}"th:href ="@{/createPatientOrder}">Search Patients</button>
                             </div>
                         </div>
                     </div>
@@ -205,19 +100,19 @@
                             </tr>
                             </thead>
                             <tbody>
-                          <!--   {% for order in active_orders %}
-                                <tr>
-                                    <td><a class="orderlink" href="{% url 'order' order_id=order.id %}">{{ order.id }}</a></td>
-                                    <td><a class="orderlink" href="{% url 'order' order_id=order.id %}">{{ order.patient.full_name }}</a></td>
-                                    <td>{{ order.level.name }}</td>
-                                </tr>
-                            {% empty %}-->
                                 <tr>
                                     <td colspan="3" class="text-center text-muted">
-                                        No orders
+                        <div class = "my-3">
+                                <tr>
+                                    <td id = "orders" colspan="3" class="text-center">
+                                        <tr th:each="patient : ${patient_list}">
+                                                <td th:text="${patient.getFirstName()}"></td>
+                                                <td th:text="${patient.getLastName()}"></td>
+                                                <td th:text="${patient.getDOB()}"></td>
+                                                <td th:text="${patient.getPhoneNumber()}"></td>
+                                                <td th:text="${patient.getEmail()}"></td>  
                                     </td>
                                 </tr>
-                           <!--  {% endfor %}-->
                             </tbody>
                         </table>
                     </div>
@@ -232,19 +127,12 @@
                             </tr>
                             </thead>
                             <tbody>
-                           <!--  {% for order in complete_orders %}
-                                <tr>
-                                    <td><a class="orderlink" href="{% url 'order' order_id=order.id %}">{{ order.id }}</a></td>
-                                    <td><a class="orderlink" href="{% url 'order' order_id=order.id %}">{{ order.patient.full_name }}</a></td>
-                                    <td>{{ order.last_edit|date:'m/d/Y' }}</td>
-                                </tr>
-                            {% empty %}-->
                                 <tr>
                                     <td colspan="3" class="text-center text-muted">
                                         No orders
+                                        
                                     </td>
                                 </tr>
-                           <!--  {% endfor %}-->
                             </tbody>
                         </table>
                     </div>

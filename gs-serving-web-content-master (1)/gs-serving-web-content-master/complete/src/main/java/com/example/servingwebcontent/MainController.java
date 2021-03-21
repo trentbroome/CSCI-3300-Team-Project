@@ -3,6 +3,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -18,7 +19,6 @@ public class MainController {
    @Autowired
    PatientRepository patientRepository;
 
-
    @GetMapping("/createPatient")
    public String createProjectForm(Model model) {
       model.addAttribute("patient_list", patientRepository.findAll());
@@ -32,7 +32,6 @@ public class MainController {
       patientRepository.save(patient);
       return "redirect:/createPatient";
    }
-
 
     @GetMapping("/login")
 	public String viewLoginPage(Model model)
@@ -48,8 +47,26 @@ public class MainController {
    @GetMapping("/home")
    public String adminPanel(Model model)
    {       
-	   return "refDrPanel";
+      model.addAttribute("patient_list", patientRepository.findAll());
+      model.addAttribute("patient", new Patient());
+      return "createPatientOrder";
    }
+   @GetMapping("/refDrPanel")
+   public String refDrButton(Model model)
+   {
+      return "refDrPanel";
+   }
+   @GetMapping("/adminBackendPage")
+   public String adminBackendPageButton(Model model)
+   {
+      return "adminBackendPage";
+   }
+   @GetMapping("/searchPatients")
+   public String searchPatientsButton(Model model)
+   {
+      return "createPatientOrder";
+   }
+
    /*@GetMapping("/radiologistsPanel")
    public String radiologistsPanel(Model model)
    {
