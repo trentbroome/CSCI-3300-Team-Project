@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="ISO-8859-1">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+    html, body{
+      background-color: gray;
+      color: blue;
+    }
+  </style>
+<header>
+
+</header>
+<body style="height:1500px">
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">RIS System</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><a th:href = "@{adminBackendPage}">Admin</a></li>
+<li><a th:href ="@{/user_logout}">Log Out</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="#"><span class="glyphicon glyphicon-user"></span> You are logged in as: <span sec:authentication="name">Username</span></a></li>
+    </ul>
+    </ul>
+  </div>
+</nav>
+  
+<div class="container" style="margin-top:50px">
+<h2>This is the admin panel</h2>
+  <table class="table table-condensed">
+		<thead>
+			<tr>
+				<th>Team Name</th>
+				<th>Name of Worker</th>
+				
+				<th sec:authorize="hasAnyAuthority('ADMIN')">Actions</th>				
+				
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="product : ${listProducts}">
+				<td th:text="${users.id}">Team Name/td>
+				<td th:text="${users.name}">Name of worker</td>
+				
+				<td sec:authorize="hasAnyAuthority('ADMIN')">
+					<a th:href="@{'/edit/' + ${Users.id}}">Edit</a>			
+					&nbsp;&nbsp;&nbsp;&nbsp;
+					<a sec:authorize="hasAuthority('ADMIN')" th:href="@{'/delete/' + ${Users.id}}">Delete</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+		<div id="physician_section">
+            <form th:action="" method="POST">
+                <!-- {% csrf_token %}-->
+                <div class="modal fade" id="new_order" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Create New Order</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="text-center">
+                                    Please enter patient's date of birth:
+                                </div>
+                                <label for="id_birth_date" class="font-weight-bold">
+                                    Date of Birth:
+                                </label>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Search Patients</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="container mt-1">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <button type="button" data-toggle="modal" data-target="#new_order" class="btn btn-primary btn-sm">
+                            Create New Order
+                        </button>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-12 col-md-6 text-center">
+                        <div class="mb-3 h5">Active Orders</div>
+                        <table class="table table-sm">
+                            <thead>
+                            <tr>
+                                <th>Order #</th>
+                                <th>Patient First Name</th>
+                                <th>Patient Last Name</th>
+                                <th>Stage</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="3" class="text-center text-muted">
+                                        No orders
+                                    <tr th:each="patient : ${patient_list}">
+            <td th:text="${patient.getpatient_id()}"></td>
+            <td th:text="${patient.getfirstName()}"></td>
+            <td th:text="${patient.getLastName()}"></td>
+                                    </td>
+                                </tr>
+                           <!--  {% endfor %}-->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-12 col-md-6 text-center">
+                        <div class="mb-3 h5">Completed Orders</div>
+                        <table class="table table-sm">
+                            <thead>
+                            <tr>
+                                <th>Order #</th>
+                                <th>Patient</th>
+                                <th>Completed</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                           <!--  {% for order in complete_orders %}
+                                <tr>
+                                    <td><a class="orderlink" href="{% url 'order' order_id=order.id %}">{{ order.id }}</a></td>
+                                    <td><a class="orderlink" href="{% url 'order' order_id=order.id %}">{{ order.patient.full_name }}</a></td>
+                                    <td>{{ order.last_edit|date:'m/d/Y' }}</td>
+                                </tr>
+                            {% empty %}-->
+                                <tr>
+                                    <td colspan="3" class="text-center text-muted">
+                                        No orders
+                                    </td>
+                                </tr>
+                           <!--  {% endfor %}-->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+		 <div class="row mt-3">
+                <div class="col-12 col-md-6 text-center">
+                    <div class="h5">
+                        Today's Appointments
+                    </div>
+                    <div class="text-muted small mb-3">
+                       <!-- {% now "DATE_FORMAT" %}-->
+                    </div>
+  <table class="table table-condensed">
+                        <thead>
+                        <tr>
+                            <th>Order #</th>
+                            <th>Patient</th>
+                            <th>Time</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <!--{% for order in todays_orders %}
+                            <tr>
+                                <td><a class="orderlink" href="{% url 'order' order_id=order.id %}">{{ order.id }}</a></td>
+                                <td><a class="orderlink" href="{% url 'order' order_id=order.id %}">{{ order.patient.full_name }}</a></td>
+                                <td>{{ order.appointment|date:'P' }}</td>
+                            </tr>
+                        {% empty %}-->
+                            <tr>
+                                <td colspan="3" class="text-center text-muted">
+                                    No orders
+                                </td>
+                            </tr>
+                        <!--{% endfor %}-->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-12 col-md-6 text-center">
+                    <div class="h5">Unscheduled Appointments</div>
+                    <div class="text-muted small mb-3">Click to Schedule</div>
+  <table class="table table-condensed">
+                        <thead>
+                        <tr>
+                            <th>Order #</th>
+                            <th>Patient</th>
+                            <th>Drafted</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <!--{% for order in unsched_orders %}
+                            <tr>
+                                <td><a class="orderlink" href="{% url 'order' order_id=order.id %}">{{ order.id }}</a></td>
+                                <td><a class="orderlink" href="{% url 'order' order_id=order.id %}">{{ order.patient.full_name }}</a></td>
+                                <td>{{ order.added_on|date:'m/d/Y' }}</td>
+                            </tr>
+                       {% empty %}-->
+                            <tr>
+                                <td colspan="3" class="text-center text-muted">
+                                    No orders
+                                </td>
+                            </tr>
+                       <!-- {% endfor %}-->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+		<div class="container mt-1" id="imaging_section">
+            <div class="row mt-3">
+                <div class="col-12 text-center">
+                    <div class="mb-3 h5">Checked In Patients</div>
+  <table class="table table-condensed">
+                        <thead>
+                        <tr>
+                            <th>Order #</th>
+                            <th>Patient</th>
+                            <th class="d-none d-md-table-cell">Visit Reason</th>
+                            <th class="d-none d-md-table-cell">Imaging</th>
+                            <th>Modality</th>
+                            <th class="d-none d-md-table-cell">Appt</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                       <!-- {% for order in checked_in_orders %}
+                            <tr>
+                                <td><a class="orderlink" href="{% url 'order' order_id=order.id %}">{{ order.id }}</a></td>
+                                <td><a class="orderlink" href="{% url 'order' order_id=order.id %}">{{ order.patient.full_name }}</a></td>
+                                <td class="d-none d-md-table-cell">{{ order.visit_reason }}</td>
+                                <td class="d-none d-md-table-cell">{{ order.imaging_needed }}</td>
+                                <td>{{ order.modality }}</td>
+                                <td class="d-none d-md-table-cell">{{ order.appointment }}</td>
+                            </tr>
+                        {% empty %}-->
+                            <tr>
+                                <td colspan="6" class="text-center text-muted">
+                                    No orders
+                                </td>
+                            </tr>
+                      <!--  {% endfor %}-->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+		<div class="container mt-1" id="analysis_section">
+<div class="table-responsive">          
+                    <div class="mb-3 h5">Awaiting Analysis</div>
+  <table class="table table-condensed">
+                        <thead>
+                        <tr>
+                            <th>Order #</th>
+                            <th>Patient</th>
+                            <th class="d-none d-md-table-cell">Visit Reason</th>
+                            <th class="d-none d-md-table-cell">Imaging</th>
+                            <th>Modality</th>
+                            <th class="d-none d-md-table-cell">Completed</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <!--{% for order in radiologist_orders %}
+                            <tr>
+                                <td>
+                                    <a class="orderlink" href="{% url 'order' order_id=order.id %}">
+                                        {{ order.id }}
+                                    </a>
+                                </td>
+                                <td>
+                                    <a class="orderlink" href="{% url 'order' order_id=order.id %}">
+                                        {{ order.patient.full_name }}
+                                    </a>
+                                </td>
+                                <td class="d-none d-md-table-cell">{{ order.visit_reason }}</td>
+                                <td>{{ order.imaging_needed }}</td>
+                                <td class="d-none d-md-table-cell">{{ order.modality }}</td>
+                                <td class="d-none d-md-table-cell">{{ order.last_edit }}</td>
+                            </tr>
+                        {% empty %}-->
+                            <tr>
+                                <td colspan="6" class="text-center text-muted">
+                                    No orders
+                                </td>
+                            </tr>
+                        <!--{% endfor %}-->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+</body>
