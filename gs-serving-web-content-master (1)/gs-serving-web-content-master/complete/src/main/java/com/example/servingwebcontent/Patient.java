@@ -18,7 +18,7 @@ public class Patient{
     @Column(name = "id") //Specifies the mapped column for a persistent property or field.
     @GeneratedValue(strategy=GenerationType.AUTO) //The GeneratedValue annotation may be applied to a primary key property or field of an entity or mapped superclass in conjunction with the Id annotation.
 			
-    private Integer patient_id;
+    private Integer patientId;
     private String firstName;
     private String lastName;
     private char middleInitial;
@@ -31,13 +31,14 @@ public class Patient{
     private Boolean mridyeAllergy;
     private Boolean latexAllergy;
     private String otherAllergy;
+    private String Modality;
 
-    public Integer getPatient_Id() {
-        return patient_id;
+    public Integer getPatientId() {
+        return patientId;
     }
 
-    public void setPatient_Id(Integer patient_id) {
-        this.patient_id = patient_id;
+    public void setPatientId(Integer patientId) {
+        this.patientId = patientId;
     }
     
     public String getFirstName() {
@@ -136,9 +137,16 @@ public class Patient{
     public void setOtherAllergy(String otherAllergy) {
         this.otherAllergy = otherAllergy;
     }
+    public String getModality() {
+        return Modality;
+    }
+
+    public void setModality(String Modality) {
+        this.Modality = Modality;
+    }
 	@Override
 	public String toString() {
-		return "Patient [patient_id=" + patient_id + ", firstName=" + firstName + ", lastName=" + lastName + "middleInitial=" + middleInitial + "dob=" + DOB + "otherAllergy=" + otherAllergy + "phoneNumer=" + phoneNumber + "email=" + email + "notes=" + notes + "asthmaAllergy=" + asthmaAllergy + "xraydyeAllergy=" + xraydyeAllergy + "mridyeAllergy=" + mridyeAllergy + "latexAllergy=" + latexAllergy +"]";
+		return "Patient [patient_id=" + patientId + ", firstName=" + firstName + ", lastName=" + lastName + "middleInitial=" + middleInitial + "dob=" + DOB + "otherAllergy=" + otherAllergy + "phoneNumer=" + phoneNumber + "email=" + email + "notes=" + notes + "asthmaAllergy=" + asthmaAllergy + "xraydyeAllergy=" + xraydyeAllergy + "Modality=" + Modality + "mridyeAllergy=" + mridyeAllergy + "latexAllergy=" + latexAllergy +"]";
 	}
 }
 
