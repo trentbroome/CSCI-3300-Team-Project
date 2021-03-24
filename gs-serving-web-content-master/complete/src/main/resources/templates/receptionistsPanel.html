@@ -8,8 +8,8 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <style>
     html, body{
-      background-color: gray;
-      color: blue;
+      background-color: lightgray;
+      color: black;
     }
   </style>
   </head>
@@ -72,7 +72,8 @@
                 </div>
                 <div class="col-12 col-md-6 text-center">
                     <div class="h5">Unscheduled Appointments</div>
-<button type="button" class="btn btn-primary">Click to Schedule</button>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Click to Schedule</button>
+    
                     <table class="table table-sm">
                         <thead>
                         <tr>
@@ -82,7 +83,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <!--{% for order in unsched_orders %}
+                     
                             <tr>
                                 <td><a class="orderlink" href="{% url 'order' order_id=order.id %}">{{ order.id }}</a></td>
                                 <td><a class="orderlink" href="{% url 'order' order_id=order.id %}">{{ order.patient.full_name }}</a></td>
@@ -94,11 +95,41 @@
                                     No orders
                                 </td>
                             </tr>
-                       <!-- {% endfor %}-->
+                      
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Schedule</h4>
+        </div>
+        <div class="modal-body">
+         <div align="center">	
+		<br/>
+    <div>
+<form th:action="@{/savePatientInfo}" th:object="" method="post">
+<div class = "form-group">
+					<input type="datetime-local" class = "form-control" {% comment %} th:field = "*{appt-datetime}" {% endcomment %}>
+</div>
+ 
+</form>
+	</div>
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" style="color: white; background-color: grey">Close</button>
+         <button type="submit" class="btn btn-default" style="color: white; background-color: blue">Schedule Appointment</button>
+        </div>
+      </div> 
+    </div>
+  </div>  
+</div>
+</div>
 </body>
 </html>
