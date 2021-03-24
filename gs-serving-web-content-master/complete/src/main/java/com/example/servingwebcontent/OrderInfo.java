@@ -20,7 +20,7 @@ public class OrderInfo{
     
     private Integer id;
     private Integer orderID;
-    private DateTimeFormat appttime;
+    private String appttime;
     private String visitReason;
     private String modality;
     private String orderNotes;
@@ -42,11 +42,11 @@ public class OrderInfo{
         this.orderID = orderID;
     }
 
-    public DateTimeFormat getApptTime(){
+    public String getApptTime(){
         return appttime;
     }
 
-    public void setApptTime(DateTimeFormat appttime){
+    public void setApptTime(String appttime){
         this.appttime = appttime;
     }
     
