@@ -18,6 +18,7 @@ public class OrderInfo{
     
     private Integer id;
     private Integer orderID;
+    private String appttime;
     private String visitReason;
     private String modality;
     private String orderNotes;
@@ -37,6 +38,14 @@ public class OrderInfo{
     
     public void setOrderID(Integer orderID) {
         this.orderID = orderID;
+    }
+
+    public String getApptTime(){
+        return appttime;
+    }
+
+    public void setApptTime(String appttime){
+        this.appttime = appttime;
     }
     
     public String getVisitReason() {
