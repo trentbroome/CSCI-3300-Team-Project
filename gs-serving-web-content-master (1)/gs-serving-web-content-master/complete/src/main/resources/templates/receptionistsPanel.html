@@ -7,14 +7,10 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <style>
- *{
-			box-sizing: border-box;
-		}
-		body{
-			background-color: #3498DB;
-			font-family: "Arial", sans-serif;
-			padding: 50px;
-		}
+    html, body{
+      background-color: lightgray;
+      color: black;
+    }
   </style>
   </head>
 <header>
@@ -32,7 +28,7 @@
             <li><a th:href ="@{/user_logout}">Log Out</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#"><span class="glyphicon glyphicon-user"></span> You are logged in as: Receptionist </a></li>
+            <li><a href="#"><span class="glyphicon glyphicon-user"></span> You are logged in as: </a></li>
           </ul>
           </ul>
         </div>
@@ -47,7 +43,7 @@
                         Today's Appointments
                     </div>
                     <div class="text-muted small mb-3">
-
+                       <!-- {% now "DATE_FORMAT" %}-->
                     </div>
                     <table class="table table-sm">
                         <thead>
@@ -58,11 +54,19 @@
                         </tr>
                         </thead>
                         <tbody>
+                        <!--{% for order in todays_orders %}
+                            <tr>
+                                <td><a class="orderlink" href="{% url 'order' order_id=order.id %}">{{ order.id }}</a></td>
+                                <td><a class="orderlink" href="{% url 'order' order_id=order.id %}">{{ order.patient.full_name }}</a></td>
+                                <td>{{ order.appointment|date:'P' }}</td>
+                            </tr>
+                        {% empty %}-->
                             <tr>
                                 <td colspan="3" class="text-center text-muted">
                                     No orders
                                 </td>
                             </tr>
+                        <!--{% endfor %}-->
                         </tbody>
                     </table>
                 </div>
@@ -81,8 +85,14 @@
                         <tbody>
                      
                             <tr>
-
+                                <td th:text="${orderinfo.orderID()}"></td>
+                                <td th:text="${patient.getFirstName()}" + " ${patient.getLastName()"></td>
+                                <td th:text="${orderinfo.timeAdded()}"></td>
+                                {% comment %} <td><a class="orderlink" href="{% url 'order' order_id=order.id %}">{{ order.id }}</a></td>
+                                <td><a class="orderlink" href="{% url 'order' order_id=order.id %}">{{ order.patient.full_name }}</a></td>
+                                <td>{{ order.added_on|date:'m/d/Y' }}</td> {% endcomment %}
                             </tr>
+                       {% empty %}-->
                             <tr>
                                 <td colspan="3" class="text-center text-muted">
                                     No orders
@@ -107,9 +117,9 @@
          <div align="center">	
 		<br/>
     <div>
-<form  method="post">
+<form th:action="@{/savePatientInfo}" th:object="OrderInfo" method="post">
 <div class = "form-group">
-					<input type="datetime-local" class = "form-control"  >
+					<input type="datetime-local" class = "form-control"  th:field = "*{appttime}">
 </div>
  
 </form>
@@ -117,7 +127,8 @@
         </div>
         <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" style="color: white; background-color: grey">Close</button>
-         <button type="submit" class="btn btn-default" style="color: white; background-color: blue">Schedule Appointment</button>
+         <button type="submit" class="btn btn-default" style="color: white; background-color: blue" value="CURRENT_TIMESTAMP" th:text="orderinfo.timeAdded">Schedule Appointment</button>
+         {% comment %} on submit CURRENT_TIMESTAMP needs to be added to orderinfo.timeAdded {% endcomment %}
         </div>
       </div> 
     </div>
@@ -126,3 +137,4 @@
 </div>
 </body>
 </html>
+
