@@ -23,6 +23,7 @@ public class OrderInfo{
     private String modality;
     private String orderNotes;
     private String imgPath;
+    private String timeAdded;
     
     public Integer getId() {
         return id;
@@ -79,6 +80,17 @@ public class OrderInfo{
     public void setimgPath(String imgPath) {
         this.imgPath = imgPath;
     }
+    
+    public String getTimeAdded() {
+        return timeAdded;
+    }
+
+    public void setTimeAdded(String timeAdded) {
+        this.timeAdded = timeAdded;
+    }
+
+    
+}
 
     
 }
