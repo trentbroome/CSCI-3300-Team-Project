@@ -66,9 +66,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers("/css/", "/images/").permitAll()
 		.antMatchers("/home/").hasAnyAuthority("ADMIN")
 		.antMatchers("/refDrPanel/").hasAnyAuthority( "REFDR")
-		.antMatchers("/techPanel").hasAnyAuthority("TECH")
-		.antMatchers("/radiologistsPanel").hasAnyAuthority( "RADIOLOGISTS")
-		.antMatchers("/receptionistsPanel").hasAnyAuthority( "RECEPTIONISTS")
+		.antMatchers("/techPanel/").hasAnyAuthority("TECH")
+		.antMatchers("/radiologistsPanel/").hasAnyAuthority( "RADIOLOGISTS")
+		.antMatchers("/receptionistsPanel/").hasAnyAuthority( "RECEPTIONISTS")
 
 		.anyRequest().authenticated()
 
@@ -78,7 +78,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 		.and().logout().logoutUrl("/user_logout").logoutSuccessUrl("/login").deleteCookies("JSESSIONID")
 
-		//.and().exceptionHandling().accessDeniedPage("/403")
+		.and().exceptionHandling().accessDeniedPage("/accessdenied")
 		.and().csrf().disable();
 	}
 }
