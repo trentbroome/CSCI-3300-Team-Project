@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="ISO-8859-1">
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+    html, body{
+      background-color: lightgray;
+      color: black;
+    }
+  </style>
+  </head>
+<header>
+
+</header>
+<body style="height:1500px">
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="#">RIS System</a>
+          </div>
+          <ul class="nav navbar-nav">
+            <li><a href="#">Receptionists</a></li>
+            <li><a th:href ="@{/user_logout}">Log Out</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#"><span class="glyphicon glyphicon-user"></span> You are logged in as: </a></li>
+          </ul>
+          </ul>
+        </div>
+      </nav>
+  
+<div class="container" style="margin-top:50px">
+<h2>This is the receptionists panel</h2>
+<div class="container mt-1" id="reception_section">
+            <div class="row mt-3">
+                <div class="col-12 col-md-6 text-center">
+                    <div class="h5">
+                        Today's Appointments
+                    </div>
+                    <div class="text-muted small mb-3">
+                       <!-- {% now "DATE_FORMAT" %}-->
+                    </div>
+                    <table class="table table-sm">
+                        <thead>
+                        <tr>
+                            <th>Order #</th>
+                            <th>Patient</th>
+                            <th>Time</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <!--{% for order in todays_orders %}
+                            <tr>
+                                <td><a class="orderlink" href="{% url 'order' order_id=order.id %}">{{ order.id }}</a></td>
+                                <td><a class="orderlink" href="{% url 'order' order_id=order.id %}">{{ order.patient.full_name }}</a></td>
+                                <td>{{ order.appointment|date:'P' }}</td>
+                            </tr>
+                        {% empty %}-->
+                            <tr>
+                                <td colspan="3" class="text-center text-muted">
+                                    No orders
+                                </td>
+                            </tr>
+                        <!--{% endfor %}-->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-12 col-md-6 text-center">
+                    <div class="h5">Unscheduled Appointments</div>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Click to Schedule</button>
+    
+                    <table class="table table-sm">
+                        <thead>
+                        <tr>
+                            <th>Order #</th>
+                            <th>Patient</th>
+                            <th>Drafted</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                     
+                            <tr>
+                                <td th:text="${orderinfo.orderID()}"></td>
+                                <td th:text="${patient.getFirstName()}" + " ${patient.getLastName()"></td>
+                                <td th:text="${orderinfo.timeAdded()}"></td>
+                                {% comment %} <td><a class="orderlink" href="{% url 'order' order_id=order.id %}">{{ order.id }}</a></td>
+                                <td><a class="orderlink" href="{% url 'order' order_id=order.id %}">{{ order.patient.full_name }}</a></td>
+                                <td>{{ order.added_on|date:'m/d/Y' }}</td> {% endcomment %}
+                            </tr>
+                       {% empty %}-->
+                            <tr>
+                                <td colspan="3" class="text-center text-muted">
+                                    No orders
+                                </td>
+                            </tr>
+                      
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Schedule</h4>
+        </div>
+        <div class="modal-body">
+         <div align="center">	
+		<br/>
+    <div>
+<form th:action="@{/savePatientInfo}" th:object="OrderInfo" method="post">
+<div class = "form-group">
+					<input type="datetime-local" class = "form-control"  th:field = "*{appttime}">
+</div>
+ 
+</form>
+	</div>
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" style="color: white; background-color: grey">Close</button>
+         <button type="submit" class="btn btn-default" style="color: white; background-color: blue" value="CURRENT_TIMESTAMP" th:text="orderinfo.timeAdded">Schedule Appointment</button>
+         {% comment %} on submit CURRENT_TIMESTAMP needs to be added to orderinfo.timeAdded {% endcomment %}
+        </div>
+      </div> 
+    </div>
+  </div>  
+</div>
+</div>
+</body>
+</html>
+
