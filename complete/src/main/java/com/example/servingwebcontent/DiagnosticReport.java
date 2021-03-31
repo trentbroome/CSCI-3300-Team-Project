@@ -15,6 +15,7 @@ public class DiagnosticReport {
     @GeneratedValue(strategy=GenerationType.AUTO) //The GeneratedValue annotation may be applied to a primary key property or field of an entity or mapped superclass in conjunction with the Id annotation
     private Integer id;
     private String report;
+    private Integer patient_id;
 
     public Integer getId() {
         return id;
@@ -29,8 +30,17 @@ public class DiagnosticReport {
     public void setReport(String report) {
         this.report = report;
     }
+
+    public Integer getPatient_id(){
+        return this.patient_id;
+    }
+
+    public void setPatient_id(Integer patient_id){
+        this.patient_id = patient_id;
+    }
+
     @Override
 	public String toString() {
-		return "DiagnosticReport [id=" + id + ", report=" + report +"]";
+		return "DiagnosticReport [id=" + id + ", report=" + report +", patient_id=" + patient_id +"]";
 	}
 }

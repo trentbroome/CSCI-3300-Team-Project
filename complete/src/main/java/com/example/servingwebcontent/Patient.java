@@ -38,7 +38,10 @@ public class Patient{
     private String Modality;
     @Transient
     private Iterable<DBFile> fileList;
+    @Transient
+    private Iterable<DiagnosticReport> report;
 
+    
     public Iterable<DBFile> getFileList()
     {
         return this.fileList;
@@ -48,7 +51,15 @@ public class Patient{
     {
         this.fileList = fileList;
     }
+    public Iterable<DiagnosticReport> getReport()
+    {
+        return this.report;
+    }
 
+    public void setReport(Iterable<DiagnosticReport> report)
+    {
+        this.report = report;
+    }
 
     public Integer getPatientId() {
         return patientId;

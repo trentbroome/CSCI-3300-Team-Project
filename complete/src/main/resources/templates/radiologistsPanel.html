@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
-<meta charset="ISO-8859-1">
+<meta charset="ISO-8859-1"></meta>
  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -16,6 +16,14 @@
 			padding: 50px;
 		}
   </style>
+  <script>
+    $(document).ready(function(){
+      $('body').on('click', '.viewButton', function(){
+        $('#patient_id').val($(this).parents('tr').data('id'));
+      });
+    });
+  </script>
+</head>
 <header>
 
 </header>
@@ -57,7 +65,7 @@
                         </thead>
                             <tbody>
                              <div class = "my-3">
-                         <tr th:each="patient : ${patient_list}">
+                         <tr th:each="patient : ${patient_list}" th:attr="data-id=${patient.getPatientId()}">
                                    <td th:text = "${patient.getPatientId()}"></td>
                                    <td th:text = "${patient.getLastName()}"></td>
                                    <td>
@@ -66,7 +74,7 @@
                                    </td>
                                    <td th:text = "${patient.getModality()}"></td>
                                    <td th:text = "${patient.getPatientId()}"></td>                              
-                                    <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                                    <td><button type="button" class="btn btn-primary viewButton" data-toggle="modal" data-target="#exampleModal">
                                        View
                                     </button>
                                     </div>
@@ -156,7 +164,8 @@
             </table>
 <form th:action="@{/saveReport}" th:object="${diagnosticReport}" method="post">
 					<label>Diagnostic Report:</label>
-					<input type="text" class = "form-control"th:field = "${diagnosticReport.report}"></input>
+          <input type="hidden" th:field="${diagnosticReport.patient_id}">
+					<input type="text" class = "form-control"th:field = "${diagnosticReport.report}">
           <button class="btn btn-primary" type="submit">Submit Report</button>
 </form>
 </td>

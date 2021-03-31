@@ -104,8 +104,74 @@
                                     <td th:text="${patient.getPatientId()}"></td>
                                     <td th:text="${patient.getLastName()}"></td>
                                     <td th:text="${patient.getPhoneNumber()}"></td>
-                                    <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">View</button></td>
+                                    <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+  View Initial Order
+</button>
 
+<!-- Modal -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Order</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table style="width:100%" >
+            <tr th:attr = "data-first_name=${patient.getFirstName()}" >
+              <th>First Name:</th>
+              <td th:text="${patient.getFirstName()}"></td>
+            </tr> 
+            <tr th:attr = "data-first_name=${patient.getMiddleInitial()}" >
+              <th>Middle Initial:</th>
+              <td th:text="${patient.getMiddleInitial()}"></td>
+            </tr>   
+            <tr th:attr = "data-first_name=${patient.getFirstName()}" >
+              <th>Last Name:</th>
+              <td th:text="${patient.getLastName()}"></td>
+            </tr>  
+            <tr th:attr = "data-first_name=${patient.getFirstName()}" >
+              <th>Date of Birth:</th>
+              <td th:text="${patient.getDOB()}"></td>
+            </tr>  
+            <tr th:attr = "data-first_name=${patient.getFirstName()}" >
+              <th>Phone Number:</th>
+              <td th:text="${patient.getPhoneNumber()}"></td>
+            </tr>  
+            <tr th:attr = "data-first_name=${patient.getFirstName()}" >
+              <th>Email:</th>
+              <td th:text="${patient.getEmail()}"></td>
+            </tr>  
+            <tr th:attr = "data-first_name=${patient.getFirstName()}" >
+              <th>Asthma Allergy:</th>
+              <td th:text="${patient.getAsthmaAllergy()}"></td>
+            </tr>
+            <tr th:attr = "data-first_name=${patient.getFirstName()}" >
+              <th>MRI dye Allergy:</th>
+              <td th:text="${patient.getMridyeAllergy()}"></td>
+            </tr>
+            <tr th:attr = "data-first_name=${patient.getFirstName()}" >
+              <th>Xray dye Allergy:</th>
+              <td th:text="${patient.getXraydyeAllergy()}"></td>
+            </tr>
+            <tr th:attr = "data-first_name=${patient.getFirstName()}" >
+              <th>latex Allergy:</th>
+              <td th:text="${patient.getLatexAllergy()}"></td>
+            </tr>
+            <tr th:attr = "data-first_name=${patient.getFirstName()}" >
+              <th>Other Allergies:</th>
+              <td th:text="${patient.getOtherAllergy()}"></td>
+            </tr>
+            </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
                             </tr>  
                             </tbody>
                         </table>
@@ -121,9 +187,86 @@
                             </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td colspan="3" class="text-center text-muted">                                        
-                                    </td>
+                         <tr th:each="patient : ${patient_list}">
+                                    <td th:text="${patient.getPatientId()}"></td>
+                                    <td th:text="${patient.getLastName()}"></td>
+                                    <td><p th:each="report : ${patient.getReport()}" th:text="${report.getReport()}"></p></td>  
+                                    <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+  View Completed Order
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Completed Order</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table style="width:100%" >
+            <tr th:attr = "data-first_name=${patient.getFirstName()}" >
+              <th>First Name:</th>
+              <td th:text="${patient.getFirstName()}"></td>
+            </tr> 
+            <tr th:attr = "data-first_name=${patient.getMiddleInitial()}" >
+              <th>Middle Initial:</th>
+              <td th:text="${patient.getMiddleInitial()}"></td>
+            </tr>   
+            <tr th:attr = "data-first_name=${patient.getFirstName()}" >
+              <th>Last Name:</th>
+              <td th:text="${patient.getLastName()}"></td>
+            </tr>  
+            <tr th:attr = "data-first_name=${patient.getFirstName()}" >
+              <th>Date of Birth:</th>
+              <td th:text="${patient.getDOB()}"></td>
+            </tr>  
+            <tr th:attr = "data-first_name=${patient.getFirstName()}" >
+              <th>Phone Number:</th>
+              <td th:text="${patient.getPhoneNumber()}"></td>
+            </tr>  
+            <tr th:attr = "data-first_name=${patient.getFirstName()}" >
+              <th>Email:</th>
+              <td th:text="${patient.getEmail()}"></td>
+            </tr>  
+            <tr th:attr = "data-first_name=${patient.getFirstName()}" >
+              <th>Asthma Allergy:</th>
+              <td th:text="${patient.getAsthmaAllergy()}"></td>
+            </tr>
+            <tr th:attr = "data-first_name=${patient.getFirstName()}" >
+              <th>MRI dye Allergy:</th>
+              <td th:text="${patient.getMridyeAllergy()}"></td>
+            </tr>
+            <tr th:attr = "data-first_name=${patient.getFirstName()}" >
+              <th>Xray dye Allergy:</th>
+              <td th:text="${patient.getXraydyeAllergy()}"></td>
+            </tr>
+            <tr th:attr = "data-first_name=${patient.getFirstName()}" >
+              <th>latex Allergy:</th>
+              <td th:text="${patient.getLatexAllergy()}"></td>
+            </tr>
+            <tr th:attr = "data-first_name=${patient.getFirstName()}" >
+              <th>Other Allergies:</th>
+              <td th:text="${patient.getOtherAllergy()}"></td>
+            </tr>
+            <tr th:attr = "data-first_name=${patient.getFirstName()}" >
+                <th>Imaging link:</th>
+                <td th:each="file : ${patient.getFileList()}" th:text="${file.getFileName()}"</td>
+            </tr>
+            <tr th:attr = "data-first_name=${patient.getFirstName()}" >
+              <th>Diagnostic report:</th>
+              <td th:text="${patient.getReport()}"></td>
+            </tr>            
+            </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>                               
                                 </tr>
                             </tbody>
                         </table>

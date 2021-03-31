@@ -54,7 +54,8 @@ public class MainController {
       {
          System.out.println(diagnosticReport.getReport());
 
-         diagnosticReportRepository.save(diagnosticReport);
+         DiagnosticReport newDiagnosticReport = diagnosticReportRepository.save(diagnosticReport);
+         System.out.println(newDiagnosticReport);
          return "redirect:/radiologistsPanel";
       }
 
@@ -104,10 +105,6 @@ public class MainController {
          {
             return "redirect:/receptionistsPanel";
          }      
-         else if(role.getId() == 6)
-         {
-            return "redirect:/patientPage";
-         }  
       }
 
 
@@ -127,6 +124,16 @@ public class MainController {
    @GetMapping("/refDrPanel")
    public String refDrPanel(Model model)
    {
+
+      Iterable<Patient> patient_list = patientRepository.findAll();
+      for(Patient patient : patient_list)
+      {
+         patient.setReport(diagnosticReportRepository.getAllFilesByOrderId(patient.getPatientId()));
+         System.out.println("Report: " + patient.getReport());
+      }
+      model.addAttribute("dbFiles", dbFileStorageService.listAllFiles());
+      model.addAttribute("report_list", diagnosticReportRepository.findAll());
+      model.addAttribute("diagnosticReport", new DiagnosticReport());
       model.addAttribute("patient_list", patientRepository.findAll());
       model.addAttribute("patient", new Patient());
       return "refDrPanel";

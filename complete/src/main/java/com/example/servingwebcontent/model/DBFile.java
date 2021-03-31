@@ -19,6 +19,8 @@ public class DBFile {
     @Lob
     private byte[] data;
 
+    private Integer patient_id;
+
     public DBFile() {
 
     }
@@ -28,7 +30,13 @@ public class DBFile {
         this.fileType = fileType;
         this.data = data;
     }
+    public Integer getPatient_id(){
+        return this.patient_id;
+    }
 
+    public void setPatient_id(Integer patient_id){
+        this.patient_id = patient_id;
+    }
     public String getId() {
         return id;
     }

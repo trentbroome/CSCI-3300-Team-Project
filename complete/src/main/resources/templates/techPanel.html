@@ -15,7 +15,15 @@
 			font-family: "Arial", sans-serif;
 			padding: 50px;
 		}
-  </style></head>
+  </style>
+    <script>
+    $(document).ready(function(){
+      $('body').on('click', '.imagingCompleteButton"', function(){
+        $('#patient_id').val($(this).parents('tr').data('id'));
+      });
+    });
+  </script>
+  </head>
 <header>
 
 </header>
@@ -93,6 +101,7 @@
                 <div class="single-upload">
                     <form id="singleUploadForm" name="singleUploadForm">
                         <input id="singleFileUploadInput" type="file" name="file" class="file-input" required />
+                        
                         <button type="submit" class="primary submit-btn">Submit</button>
                     </form>
                     <div class="upload-response">
