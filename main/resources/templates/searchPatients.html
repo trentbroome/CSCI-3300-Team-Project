@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="ISO-8859-1">
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/assets/moment/moment.min.js}"></script>
+<script th:src="@{/assets/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.js}"></script>
+
+<script>
+  $( function() {
+    $( "#datepicker" ).datepicker();
+  } );
+  </script>
+    <style>
+ *{
+			box-sizing: border-box;
+		}
+		body{
+			background-color: #3498DB;
+			font-family: "Arial", sans-serif;
+			padding: 50px;
+		}
+  </style>
+  </head>
+
+<header>
+
+</header>
+<body style="height:1500px">
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">RIS System</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><a th:href="@{/createPatientOrder}">Patient info</a></li>
+      <li><a th:href ="@{/user_logout}">Log Out</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="#"><span class="glyphicon glyphicon-user"></span> You are logged in as: Referral Doctor </a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container" style="margin-top:50px">
+<h2>This is the Patient Search Page</h2>
+ <div id="physician_section">
+           <div class="container">
+
+    <div class="row">
+        <div class="col-md-4 mt-5">
+            <form method="post"th:action= '@{/searchPatients}'>
+
+                <p>Date: <input type="text" id="datepicker"></p>
+
+                <button class="btn btn-primary" type="submit"th:action = '@{/searchPatients}'>Search Patients</button>
+            </form>
+        </div>
+    </div>
+</div>
+<div>
+                        <table class="table table-sm">
+                            <thead>
+                            <tr>
+                                <th>First</th>
+                                <th>Last</th>
+                                <th>Email</th>                                
+                            </tr>
+                            </thead>
+                            <tbody>
+                                 <tr th:each="patient : ${patient_list}">
+                                    <td th:text="${patient.getFirstName()}" ></td>
+                                    <td th:text="${patient.getLastName()}" ></td>   
+                                    <td th:text="${patient.getEmail()}" ></td>      
+                                </tr>
+                            </tbody>
+                        </table>
+</div>
