@@ -58,6 +58,14 @@ public class MainController {
          System.out.println(newDiagnosticReport);
          return "redirect:/radiologistsPanel";
       }
+	
+    @RequestMapping("/Appointment") 
+    	public String addNewAppointment(@ModelAttribute Appointment appointment, Model model)
+        {
+
+	      model.addAttribute("order_info", appointment);
+	      return "redirect:/receptionistsPanel";
+        }
 
 
     @GetMapping("/login")
@@ -182,10 +190,12 @@ public class MainController {
       model.addAttribute("diagnosticReport", new DiagnosticReport());
 	   return "radiologistsPanel";
    }
+	
 
    @GetMapping("/receptionistsPanel")
    public String receptionistsPanel(Model model)
    {
+      model.addAttribute("Appointment", new Appointment());
       model.addAttribute("patient_list", patientRepository.findAll());
       model.addAttribute("patient", new Patient());
 	   return "receptionistsPanel";
