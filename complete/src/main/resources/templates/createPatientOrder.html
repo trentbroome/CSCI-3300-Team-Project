@@ -25,6 +25,13 @@
     $( "#datepicker" ).datepicker();
   } );
   </script>
+  <script>
+    $(document).ready(function(){
+      $('body').on('click', '.viewButton', function(){
+        $('#patient_id').val($(this).parents('tr').data('id'));
+      });
+    });
+  </script>
   </head>
 <header>
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -121,18 +128,6 @@
 					<label>Other Allergies:</label>
 					<input type="text" class = "form-control" th:field = "*{otherAllergy}"/></td>
 </div>
-<div class = "form-group">
-					<label>Modality:</label>
-          <select th:field = "*{modality}">
-            <option value="MRI">MRI</option>
-            <option value="CTscan">CT Scan</option>
-            <option value="Xray">X ray</option>
-        </select>
-</div>
-<div class = "form-group">
-					<label>Visit Notes:</label>
-					<input type="text" class = "form-control"th:field = "*{notes}" >					       
-</div>
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 	</div>
@@ -166,13 +161,13 @@
                                             <div class = "my-3">
                                 <tr>
                                     <td colspan="3" class="text-center text-muted">
-                                    <tr th:each="patient : ${patient_list}">
+                                    <tr th:each="patient : ${patient_list}" th:attr = "data-id=${patient.getPatientId()}">
                                     <td th:text="${patient.getFirstName()}"></td>
                                     <td th:text="${patient.getLastName()}"></td>
                                     <td th:text="${patient.getDOB()}"></td>
                                     <td th:text="${patient.getPhoneNumber()}"></td>
                                     <td th:text="${patient.getEmail()}"></td>  
-                                    <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                                    <td><button type="button" class="btn btn-primary viewButton" data-toggle="modal" data-target="#exampleModal">
                                        View
                                     </button>
 <!-- Modal -->
@@ -233,6 +228,24 @@
             </tr>
             </table>
             </div>
+<form th:action="@{/saveOrder}" th:object="${order}"method="post">
+<div class = "form-group">
+					<label>Modality:</label>
+          <input type="hidden" th:field="${order.patient_id}">
+          <select th:field = "*{modality}">
+            <option value="MRI">MRI</option>
+            <option value="CTscan">CT Scan</option>
+            <option value="Xray">X ray</option>
+        </select>
+</div>
+<div class = "form-group">
+					<label>Visit Notes:</label>
+          <input type="hidden" th:field="${order.patient_id}">
+					<input type="text" class = "form-control"th:field = "*{notes}" >					       
+</div>
+<button type="submit" class="btn btn-primary">Submit</button>
+<button type="close" class="btn btn-primary">Close</button>
+</form>
 <div class="modal-footer">
 </div>
 </div>
