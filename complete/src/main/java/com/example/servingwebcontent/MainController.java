@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -35,11 +36,22 @@ public class MainController {
    DBFileStorageService dbFileStorageService;
    @Autowired
    DBFileRepository dbFileRepository;
+   @Autowired
+   OrderRepository orderRepository;
+   @Autowired 
+   AppointmentRepository appointmentRepository;
+   @Autowired
+   OrderStatusRepository orderStatusRepository;
+   @Autowired
+   EmployeeRepository employeeRepository;
+
 
    @GetMapping("/createPatient")
    public String createProjectForm(Model model) {
       model.addAttribute("patient_list", patientRepository.findAll());
       model.addAttribute("patient", new Patient());
+      model.addAttribute("order_list", orderRepository.findAll());
+      model.addAttribute("order", new Order());
       return "createPatientOrder";
    }
 
@@ -58,15 +70,20 @@ public class MainController {
          System.out.println(newDiagnosticReport);
          return "redirect:/radiologistsPanel";
       }
-	
-    @RequestMapping("/Appointment") 
-    	public String addNewAppointment(@ModelAttribute Appointment appointment, Model model)
-        {
-
-	      model.addAttribute("order_info", appointment);
-	      return "redirect:/receptionistsPanel";
-        }
-
+      @PostMapping("/saveOrder")
+      public String saveOrder(@ModelAttribute("order") Order order, BindingResult result, Model model)
+      {
+         Order newOrder = orderRepository.save(order);
+         System.out.println(order);
+         return "redirect:/refDrPanel";
+      }
+      @PostMapping("saveAppointment")
+      public String addNewAppt(@ModelAttribute("appointment") Appointment appointment, Model model)
+      {
+         Appointment newAppointment = appointmentRepository.save(appointment);
+         System.out.println(appointment);
+         return "redirect:/receptionistsPanel";
+      }
 
     @GetMapping("/login")
 	public String viewLoginPage(Model model)
@@ -89,7 +106,10 @@ public class MainController {
       {
          System.out.println(role.getName());
       }
-
+      for(OrderStatus status : orderStatusRepository.findAll())
+      {
+         System.out.println(status.getId());
+      }
       for(Role role : userRoles)
       {
          System.out.println(role.getName());
@@ -121,14 +141,19 @@ public class MainController {
       model.addAttribute("patient", new Patient());
 
       return "createPatientOrder";
+   }
 
+   @PostMapping("/saveEmpInfo")
+   public String saveEmpInfo(@ModelAttribute("employee") Employee employee, BindingResult result, Model model)
+   {
+      Employee newEmployee = employeeRepository.save(employee);
+      return "redirect:/adminBackendPage";
    }
    @GetMapping("/adminPanel")
    public String adminPanel(Model model)
    {
       return "adminPanel";
    }
-
    @GetMapping("/refDrPanel")
    public String refDrPanel(Model model)
    {
@@ -163,11 +188,12 @@ public class MainController {
        {
           System.out.println(pat.getEmail());
        }
-
+       model.addAttribute("patient_list", patientRepository.getPatientByDOB(patient.getDOB()));
        model.addAttribute("patient", new Patient());
+       model.addAttribute("order", new Order());
+
        return "searchPatients";
    }
-
    @GetMapping("/createPatientOrder")
    public String createPatientOrderButton(Model model)
    {
@@ -182,7 +208,7 @@ public class MainController {
          patient.setFileList(dbFileRepository.getAllFileUploadsByOrderId(patient.getPatientId()));
          System.out.println("File list: " + patient.getFileList());
       }
-
+      
       model.addAttribute("patient_list", patient_list);
       model.addAttribute("patient", new Patient());
       model.addAttribute("dbFiles", dbFileStorageService.listAllFiles());
@@ -190,12 +216,20 @@ public class MainController {
       model.addAttribute("diagnosticReport", new DiagnosticReport());
 	   return "radiologistsPanel";
    }
-	
 
    @GetMapping("/receptionistsPanel")
    public String receptionistsPanel(Model model)
    {
-      model.addAttribute("Appointment", new Appointment());
+      /*Iterable<Order> order_list = orderRepository.findAll();
+      for(Order order : order_list)
+      {
+         order.setPatientLastName(OrderRepository.getAllPatients(order.getPatientLastName()));
+         System.out.println("Patient Order List: " + order.getPatientLastName());
+      }*/
+      model.addAttribute("order_list", orderRepository.findAll());
+      model.addAttribute("order", new Order());
+      model.addAttribute("appointment_list", appointmentRepository.findAll());
+      model.addAttribute("appointment", new Appointment());
       model.addAttribute("patient_list", patientRepository.findAll());
       model.addAttribute("patient", new Patient());
 	   return "receptionistsPanel";
@@ -204,19 +238,12 @@ public class MainController {
    @GetMapping("/techPanel")
    public String techPanel(Model model)
    {
-      
+      model.addAttribute("appointment_list", appointmentRepository.findAll());
+      model.addAttribute("appointment", new Appointment());
       model.addAttribute("patient_list", patientRepository.findAll());
       model.addAttribute("patient", new Patient());
+      model.addAttribute("order_list", orderRepository.findAll());
+      model.addAttribute("order", new Order());
 	   return "techPanel";
-   }
-   @GetMapping("/listFiles")
-   public String listFiles(Model model)
-   {
-	   return "listFiles";
-   }
-   @GetMapping("/patientPage")
-   public String patientPage(Model model)
-   {
-	   return "patientPage";
-   }
+   }  
 }
